@@ -1,0 +1,27 @@
+body {
+  background: #373c41;
+  background: linear-gradient(to right, #dadbdb, #646464);
+}
+.card-img-left {
+  width: 45%;
+  background: scroll center url("../../img/auth-cover.jpg");
+  background-size: cover;
+}
+.register{
+  background:rgba(253, 253, 253, 0.7) ;
+}
+.btn-login {
+  font-size: 0.9rem;
+  letter-spacing: 0.05rem;
+  padding: 0.75rem 1rem;
+}
+
+.btn-google {
+  color: white !important;
+  background-color: #ea4335;
+}
+
+.btn-facebook {
+  color: white !important;
+  background-color: #3b5998;
+}

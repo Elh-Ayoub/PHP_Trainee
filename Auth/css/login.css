@@ -1,0 +1,25 @@
+body {
+    background: #373c41;
+    background: linear-gradient(to right, #dadbdb, #646464);
+}
+
+.login {
+    background:rgba(253, 253, 253, 0.7);
+}
+
+.bg-image {
+    background-image: url("../../img/auth-cover.jpg");
+    background-size: cover;
+    background-position: center;
+}
+
+.login-heading {
+    font-weight: 300;
+}
+
+.btn-login {
+    font-size: 0.9rem;
+    letter-spacing: 0.05rem;
+    padding: 0.75rem 1rem;
+}
+
