@@ -17,3 +17,8 @@ $(document).ready(function(){
         $('#close-icon').addClass('fa-bars')
     })
 });
+$(window).on('load', function() {
+    setTimeout(function(){ 
+        $('.preloader').addClass('preloader-deactivate');
+    }, 1000);
+});

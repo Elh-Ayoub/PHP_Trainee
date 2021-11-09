@@ -1,10 +1,10 @@
 <nav class="main-header navbar navbar-expand-md navbar-light navbar-white" style="box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;">
     <div class="container">
         <a href="#" class="navbar-brand" id="sidebarToggle">
-            <img src="./img/logo.png" alt="Logo" class="brand-image img-circle elevation-3" style="opacity: .8; width: 80px; ">
+            <img src="<?php echo 'http://'. $_SERVER['HTTP_HOST'] . '/img/logo.png'?>" alt="Logo" class="brand-image img-circle elevation-3" style="opacity: .8; width: 80px; ">
             <span class="brand-text font-weight-light" style="font-family: Verdana, Geneva, Tahoma, sans-serif;">Sociopedia</span>
         </a>
-        <button class="navbar-toggler order-1" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler order-1 menu-btn" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse order-3" id="navbarCollapse">
@@ -36,7 +36,7 @@
                 <div>
                     <a href="/profile.php" class="nav-link d-flex align-items-center justify-content-center">
                         <div class="image px-1">
-                            <img src="./img/default.png" class="img-fluid img-circle" alt="User" width="30" height="30" style="border-radius: 50%;">
+                            <img src="<?php echo 'http://'. $_SERVER['HTTP_HOST'] . '/img/default.png' ?>" class="img-fluid img-circle" alt="User" width="30" height="30" style="border-radius: 50%;">
                         </div>
                         <span>Username</span>
                     </a>
