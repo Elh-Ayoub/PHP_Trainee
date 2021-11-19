@@ -14,8 +14,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="../css/index.css">
-    <style>.main-footer{position: absolute; bottom:  0; background:  lightgray; width: 100%;} @media only screen and (max-width: 576px) {.main-footer{position: relative;}}</style>
-    <title>Create post</title>
+    <style>.main-footer{bottom:  0; background:  lightgray; width: 100%;}</style>
+    <title>Edit post</title>
 </head>
 <body>
     <div class="wrapper">
@@ -23,38 +23,36 @@
         <div class="preloader">
             <img class="loader" src="../img/logo.png" alt="preloader">
         </div>
-
         <!-- Sidebar -->
         <?php include './layouts/sidebar.php';?>
         <!-- navbar -->
         <?php include './layouts/navbar.php';?>
-        
         <!-- Create post -->
         <div class="content-wrapper">
             <section class="content">
                 <div class="container">
-                <h2 class="mt-3">Create post</h2>
+                <h2 class="mt-3">Edit post</h2>
                     <div class="row">
                         <div class="col-12 mt-4">
                             <div class="card">
                                 <div class="card-body">
-                                    <form id="infoForm" action="<?php echo $configs['App_url'] . Route::route('store.post')->action ?>" method="POST" class="form-horizontal" enctype="multipart/form-data">
+                                    <form id="infoForm" action="<?php echo $configs['App_url'] . Route::route('update.post')->action ?>" method="POST" class="form-horizontal" enctype="multipart/form-data">
                                         <div class="form-group row py-2">
                                             <label for="inputTitle" class="col-sm-2 col-form-label"><b>Title</b></label>
                                             <div class="col-sm-10">
-                                                <input type="text" class="form-control" name="title" id="inputTitle" placeholder="Post title">
+                                                <input type="text" class="form-control" name="title" id="inputTitle" placeholder="Post title" value="<?php echo $post->title?>">
                                             </div>
                                         </div>
                                         <div class="form-group row py-2">
                                             <label for="inputContent" class="col-sm-2 col-form-label"><b>Content</b></label>
                                             <div class="col-sm-10">
-                                                <textarea type="text" class="form-control" id="inputEmail" name="content" placeholder="Post content"></textarea>
+                                                <textarea type="text" class="form-control" id="inputEmail" name="content" placeholder="Post content"><?php echo $post->content?></textarea>
                                             </div>
                                         </div>
                                         <div class="form-group row py-2">
                                             <label for="inputCategories" class="col-sm-2 col-form-label"><b>Categories</b></label>
                                             <div class="col-sm-10">
-                                                <input type="text" class="form-control" name="categories" id="inputCategories" placeholder="Post categories">
+                                                <input type="text" class="form-control" name="categories" id="inputCategories" placeholder="Post categories" value="<?php echo $post->categories?>">
                                             </div>
                                         </div>
                                         <div class="form-group row py-2">
@@ -63,12 +61,19 @@
                                                 <input type="file" id="images" name="images" class="form-control">
                                             </div>
                                         </div>
+                                        <div class="form-group row py-2">
+                                            <label class="col-sm-2 col-form-label"><b>Selected image: </b></label>
+                                            <div class="col-sm-10">
+                                                <img id="selected-img" src="<?php echo $post->images ?>" class="img-fluid img-thumbnail img-sm" alt="post-img" height="200px" width="200px">
+                                            </div>
+                                        </div>
+                                        <input type="text" class="d-none" name="post_id" value="<?php echo $post->id ?>">
                                     </form>
                                     <div class="form-group d-flex justify-content-between my-3">
                                         <div class="offset-sm-2">
-                                            <button id="SubmitInfoForm" type="submit" class="btn btn-success">Create</button>
+                                            <button id="SubmitInfoForm" type="submit" class="btn btn-warning">Save</button>
                                         </div>
-                                        <a type="button" href="/" class="btn btn-secondary" data-toggle="modal" data-target="#modal-delete-user">Cancel</a>
+                                        <a type="button" href="/" class="btn btn-secondary">Cancel</a>
                                     </div>
                                 </div>
                             </div>
@@ -89,7 +94,18 @@
         $('#SubmitInfoForm').click(function(){
            $('#infoForm').submit()
         })
+        function readImage(input) {
+        if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#selected-img').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+        $("#images").change(function(){
+            readImage(this);
+        });
     </script>
 </body>
 </html>
-

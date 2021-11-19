@@ -5,6 +5,9 @@
     });
     class Post extends Model{
 
+        public $file_name = './Posts/posts.txt';
+
+        public $id;
         public $author;
         public $title;
         public $content;

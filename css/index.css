@@ -150,3 +150,30 @@
     90% { transform: translate(1px, 2px) rotate(0deg); }
     100% { transform: translate(1px, -2px) rotate(-1deg); }
 }
+
+@media only screen and (max-width: 900px) {
+    #sidebar{
+        width: 30%; 
+    }
+}
+@media only screen and (max-width: 600px) {
+    #sidebar{
+        width: 40%; 
+    }
+}
+@media only screen and (max-width: 410px) {
+    #sidebar{
+        width: 50%; 
+    }
+}
+@media only screen and (max-width: 322px) {
+    #sidebar{
+        width: 60%; 
+    }
+}
+@media only screen and (max-width: 272px) {
+    #sidebar{
+        width: 70%; 
+    }
+}
+
