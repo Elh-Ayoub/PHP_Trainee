@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/chip.css">
     <style>.main-footer{position: absolute; bottom:  0; background:  lightgray; width: 100%;} @media only screen and (max-width: 576px) {.main-footer{position: relative;}}</style>
     <title>Create post</title>
 </head>
@@ -54,7 +55,8 @@
                                         <div class="form-group row py-2">
                                             <label for="inputCategories" class="col-sm-2 col-form-label"><b>Categories</b></label>
                                             <div class="col-sm-10">
-                                                <input type="text" class="form-control" name="categories" id="inputCategories" placeholder="Post categories">
+                                            <div id="res"></div>
+                                                <input type="text" id="categories" name="cat" class="form-control" maxlength="30" placeholder="Categoies">
                                             </div>
                                         </div>
                                         <div class="form-group row py-2">
@@ -85,6 +87,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/16bfaec043.js" crossorigin="anonymous"></script>
     <script src="../js/sidebar.js"></script>
+    <script src="../js/chip.js"></script>
     <script>
         $('#SubmitInfoForm').click(function(){
            $('#infoForm').submit()

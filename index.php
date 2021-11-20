@@ -5,6 +5,7 @@ spl_autoload_register(function ($class_name) {
 require_once './Controllers/PostController.php';
 require_once './Controllers/AuthController.php';
 require_once './Controllers/UserController.php';
+require_once './Controllers/CategoryController.php';
 require_once './Models/Model.php';
 require_once './Models/Post.php';
 $configs = include "./config.php";
@@ -34,6 +35,11 @@ try {
     Route::get('/posts/edit', [PostController::class, 'edit'])->name('edit.post');
     Route::get('/posts/update', [PostController::class, 'update'])->name('update.post');
     Route::get('/posts/delete', [PostController::class, 'destroy'])->name('delete.post');
+
+    #categories
+    Route::get('/categories', [CategoryController::class, 'index'])->name('categories');
+    Route::get('/categories/posts', [CategoryController::class, 'showPosts'])->name('categories.posts');
+
     
     // ---- execute route callback ----
     $b = false;

@@ -30,7 +30,7 @@
         </li>
         <? endif; ?>
         <li>
-            <a href="#" class="nav-link text-white">
+            <a href="/categories" class="nav-link text-white <? if($_SERVER['REQUEST_URI'] === '/categories'):?> active <? endif;?>">
                 <svg class="bi me-2" width="16" height="16"><use xlink:href="#table"></use></svg>
                 Categories
             </a>

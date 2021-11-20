@@ -47,12 +47,16 @@
                 if(move_uploaded_file($_FILES["images"]["tmp_name"], $target_file)){
                     $urls = $configs['App_url'] . $configs['post-images'] .basename($_FILES["images"]['name']) . " ";
                 }
-
+                foreach($_REQUEST['categories'] as $category){
+                    Category::create([
+                        'title' => $category,
+                    ]);
+                }
                 $post = Post::create([
                     'author' => $_SESSION['auth']->id,
                     'title' => $_REQUEST['title'],
                     'content' => $_REQUEST['content'],
-                    'categories' => $_REQUEST['categories'],
+                    'categories' => implode(' ',$_REQUEST['categories']),
                     'created_at' => date('d-m-y h:i:s'),
                     'images' => $urls,
                 ]);
