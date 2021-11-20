@@ -16,16 +16,24 @@
         public static function update(){
             if(isset($_REQUEST)){
                 $users = User::all();
-                foreach($users as $user){
-                    if($user != $_SESSION['auth']){
-                         if($user->email === $_REQUEST['email']){
-                            throw new Exception('Email (' . $user->email . ') Already exist!');
+
+                if($_SESSION['auth']->email !== $_REQUEST['email'] || $_SESSION['auth']->username !== $_REQUEST['username']){
+                    foreach($users as $user){
+                        if($_SESSION['auth']->email !== $_REQUEST['email']){
+                            if($user->email === $_REQUEST['email']){
+                                throw new Exception('Email (' . $user->email . ') Already exist!');
+                                return;
+                            }
                         }
-                        elseif($user->username === $_REQUEST['username']){
-                            throw new Exception('Username (' . $user->username . ') Already exist!');
+                        if($_SESSION['auth']->username !== $_REQUEST['username']){
+                            if($user->username === $_REQUEST['username']){
+                                throw new Exception('Username (' . $user->username . ') Already exist!');
+                                return;
+                            }
                         }
-                    }  
+                    }
                 }
+                
                 $_SESSION['auth']->update([
                     'username' => $_REQUEST['username'],
                     'email' => $_REQUEST['email'],

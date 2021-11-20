@@ -56,9 +56,9 @@
                                     </div>
                                 <? endif; ?>
                             </div>
-                            <p class="text-center"><b><?php echo $post->title ?></b></p>
+                            <p class="text-center"><b><?php echo htmlentities($post->title) ?></b></p>
                             <p>
-                                <?php echo $post->content ?>
+                                <?php echo htmlentities($post->content) ?>
                             </p>
                             <?php if ($post->images): ?>
                                 <img class="brand-image img-fluid" src="<?php echo $post->images ?>">

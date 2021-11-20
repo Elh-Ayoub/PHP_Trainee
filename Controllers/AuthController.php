@@ -15,47 +15,38 @@
         
         public static function login(){
             if(isset($_REQUEST) && isset($_REQUEST['email']) && $_REQUEST['password'] != ""){
-                if(file_exists('Auth/users.txt')){
-                    $users = User::all();
+                $users = User::all();
 
-                    foreach($users as $user){
-                        if($user->email === $_REQUEST['email']){
-                            if(password_verify($_REQUEST['password'], $user->password)){
-                                $_SESSION['auth'] = $user;
-                                echo "<script type='text/javascript'>location.href = '/';</script>"; 
-                                return;
-                            }else{
-                                throw new Exception("password incorrect!");
-                                return;
-                            }
+                foreach($users as $user){
+                    if($user->email === $_REQUEST['email']){
+                        if(password_verify($_REQUEST['password'], $user->password)){
+                            $_SESSION['auth'] = $user;
+                            echo "<script type='text/javascript'>location.href = '/';</script>"; 
+                            return;
+                        }else{
+                            throw new Exception("password incorrect!");
+                            return;
                         }
                     }
-                    throw new Exception("Email not found!");
-                    
-                }else{
-                    throw new Exception('Not registred yet!');
                 }
+                throw new Exception("Email not found!");   
             }
         }
 
         public static function register(){
             if(isset($_REQUEST) && isset($_REQUEST['username']) && $_REQUEST['email'] != "" && $_REQUEST['password'] != ""  && $_REQUEST['password_confirmation'] != ""){
-                if(file_exists('Auth/users.txt')){
-                    $users = User::all();
+                $users = User::all();
 
-                    foreach($users as $user){
-                        if($user->email === $_REQUEST['email']){
-                            throw new Exception('Email (' . $user->email . ') Already exist!');
-                        }
-                        elseif($user->username === $_REQUEST['username']){
-                            throw new Exception('Username (' . $user->username . ') Already exist!');
-                        }
+                foreach($users as $user){
+                    if($user->email === $_REQUEST['email']){
+                        throw new Exception('Email (' . $user->email . ') Already exist!');
                     }
-                    AuthController::addUser($_REQUEST);
-                    
-                }else{
-                    AuthController::addUser($_REQUEST);
+                    elseif($user->username === $_REQUEST['username']){
+                        throw new Exception('Username (' . $user->username . ') Already exist!');
+                    }
                 }
+                AuthController::addUser($_REQUEST);
+               
             }
         }
 
@@ -69,13 +60,12 @@
                     'password' => $data['password'],
                     'email' => $data['email'],
                     'profile_picture' => $configs['App_url']  . $configs['default-avatar'],
-                    'created_at' => date('d-m-y h:i:s'),
                 ]);
                 
                 echo "<script>alert('Account created succesfully!')</script>"; 
                 echo "<script type='text/javascript'>location.href = '/auth/login';</script>";  
             }else{
-                echo ($data['password'] !== $data['password_confirmation']) ? ("<script>alert('Password not confirmed!')</script>") : ("<script>alert('Minimum length of password is 8 characters!')</script>");
+                echo ($data['password'] !== $data['password_confirmation']) ? (throw new Exception('Password not confirmed!')) : (throw new Exception('Minimum length of password is 8 characters!'));
             }
         }
 

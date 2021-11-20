@@ -1,9 +1,10 @@
 <?php
-
-    class Model {
+    include_once "./Database/DBConnection.php";
+    class Model extends DBConnection{
 
         // ---- create an instance of model child----
         public static function create($params) {
+            $configs = include './config.php';
             if(!is_array($params)){
                 throw new ErrorException('This function parametre must be an associative array');
             }
@@ -11,44 +12,30 @@
             foreach($params as $key => $value){
                 $model->$key = $value;
             }
-            //check...
-            $i = 1;
-            while(true){
-                if(!self::find($i)){
-                    $model->id = $i;
-                    break;
-                }
-                $i++;
-            }
-            ////...
-            $model_file = fopen($model->file_name, "a");
-            fwrite($model_file, $model->__toString() . "\n");
+            // add to database
+            $statement = (new self)->connect()->prepare($model->insertQuery($configs['DB_NAME']));
+            $statement->execute();
             return $model;
         }
 
         public static function find($id){
-            $model = new static();
-            $fmodels = file($model->file_name);
-            if(!$fmodels){
-                return null;
-            }
-            foreach($fmodels as $ele){
-                $row  = json_decode($ele, true);
-                if((int)$row['id'] === $id){
-                    foreach($row as $key => $value){
-                        $model->$key = $value;
-                    } 
-                    return $model;
+            $configs = include './config.php';
+            $statement = (new self)->connect()->query("SELECT * FROM " . $configs['DB_NAME']. "." . (new static)->table_name . " where id = " . $id);
+            if($row = $statement->fetch()){
+                $model = new static();
+                foreach($row as $key => $value){
+                    $model->$key = $value;
                 }
+                return $model;
             }
             return null;
         }
         public static function all(){
-            $model = new static();
-            $fmodels = file($model->file_name);
             $models = [];
-            foreach($fmodels as $ele){
-                $row  = json_decode($ele, true);
+            $configs = include './config.php';
+            $statement = (new self)->connect()->query("SELECT * FROM " . $configs['DB_NAME']. "." . (new static)->table_name);
+            
+            while($row = $statement->fetch()){
                 $m = new static();
                 foreach($row as $key => $value){
                     $m->$key = $value;
@@ -62,63 +49,52 @@
             if(!is_array($params)){
                 throw new ErrorException('This function parametre must be an associative array');
             }
-            $model = new static();
-            $fmodels = file($model->file_name);
-            if(!$fmodels){
-                return null;
-            }
             $models = [];
-            $params_len = count($params);
-            foreach($fmodels as $ele){
-                $row  = json_decode($ele, true);
-                $check = true;
-                foreach($params as $param){
-                    if(!in_array($param, $row)){
-                        $check = false;
-                    }
+            $configs = include './config.php';
+            
+            $query = [];
+            foreach($params as $key => $value){
+                array_push($query, $key . "=\"" . $value . "\"");
+            }
+            
+            $statement = (new self)->connect()->query("SELECT * FROM ". $configs['DB_NAME']. "." . (new static)->table_name . " where " . implode(" AND ", $query));
+            while($row = $statement->fetch()){
+                $m = new static();
+                foreach($row as $key => $value){
+                    $m->$key = $value;
                 }
-                if($check){
-                    $m = new static();
-                    foreach($row as $key => $value){
-                        $m->$key = $value;
-                    }
-                    array_push($models, $m);
-                }
+                array_push($models, $m);
             }
             return $models;
         }
 
         // ---- Update ----
         public function update($params){
+            $configs = include './config.php';
             if(!is_array($params)){
                 throw new ErrorException('This function parametre must be an associative array');
             }
             foreach($params as $key => $value){
                 $this->$key = $value;
             }
-            $this->update_file($this);
+            // update in database
+            $statement = $this->connect()->prepare($this->updateQuery($configs['DB_NAME'], $this->id));
+            $statement->execute();
             return $this;
         }
-        // ---- Unset/clear all fields ----
+        // ---- delete ----
         public static function destroy($id){
+            $configs = include './config.php';
             $model = new static();
-            $fmodels = file($model->file_name);
-            $result = '';
-            foreach($fmodels as $ele){
-                $row  = json_decode($ele, true);
-                if((int)$row['id'] === $id){
-                    continue;
-                }else{
-                    $result .= $ele;
-                }
-            }
-            file_put_contents($model->file_name, $result);
+            $statement = (new self)->connect()->prepare("DELETE FROM " . $configs['DB_NAME'] . "." . $model->table_name . " where id=" . $id);
+            $statement->execute();
         }
         
         public function __toString(){
             return json_encode($this);
         }
 
+        //delete this
         public function update_file($model){
             $fmodels = file($model->file_name);
             $result = '';

@@ -7,11 +7,7 @@
 
         // posts list
         public static function index(){
-            $posts = [];
-            if(file_exists('Posts/posts.txt')){
-                $posts = Post::all();
-            }
-            extract($posts);
+            $posts = Post::all();
             include "./Posts/posts.php";
         }
 
@@ -69,7 +65,7 @@
         public static function update(){
             $configs = include "./config.php";
             if(isset($_REQUEST) && isset($_REQUEST['title']) && $_REQUEST['content'] != "" && $_REQUEST['categories'] != ""){
-                $post = Post::find((int) $_REQUEST['post_id']);
+                $post = Post::find($_REQUEST['post_id']);
                 if($post && $_SESSION['auth']->id === $post->author){
                     $post_image = $post->images;
                     if($_FILES['images']){
@@ -96,7 +92,7 @@
         //Delete post
         public static function destroy(){
             if(isset($_REQUEST['post_id'])){
-                $id = (int)$_REQUEST['post_id'];
+                $id = $_REQUEST['post_id'];
                 $post = Post::find($id);
                 if($post){
                     //delete image if exist
