@@ -36,8 +36,8 @@
             <?php foreach($posts as $post): ?>
                 <?php $author =  User::find($post->author) ?>
                 <div class="row d-flex justify-content-center">
-                    <div class="col-lg-7">
-                        <div class="card mb-4">
+                    <div class="col-lg-7 mb-4">
+                        <div class="card">
                         <div class="card-body">
                             <div class="media mb-3 d-flex justify-content-between">
                                 <div>
@@ -68,17 +68,28 @@
                                 
                             </div>
                         </div>
+                        <?php
+                            $countPostLikes = count(Like::where(['post_id' => $post->id, 'type' => 'like'])); 
+                            $countPostDislikes = count(Like::where(['post_id' => $post->id, 'type' => 'dislike']));
+                            $authLikes = count(Like::where(['post_id' => $post->id, 'type' => 'like', 'author' => $_SESSION['auth']->id]));
+                            $authDislikes = count(Like::where(['post_id' => $post->id, 'type' => 'dislike', 'author' => $_SESSION['auth']->id]));
+                        ?>
                         <div class="card-footer">
-                            <a href="#" class="d-inline-block text-muted text-decoration-none">
-                                <strong>123</strong> Likes</small>
+                            <a data-id="<?php echo $post->id ?>" data-url="<?php echo $configs['App_url'] . Route::route('create.like')->action ?>" data-type="like" data-auth="<?php echo $_SESSION['auth']->id?>" class="d-inline-block text-muted text-decoration-none create-like" style="cursor: pointer;">
+                                <strong class="mx-1 countLikes">(<?php echo $countPostLikes ?>)</strong><i class="<? if($authLikes == 1): ?>fas <? else: ?> far <? endif;?> fa-thumbs-up like-icon"></i> Likes
                             </a>
-                            <a href="#" class="d-inline-block text-muted mx-3 text-decoration-none">
-                                <strong>0</strong> Dislikes</small>
+                            <a data-id="<?php echo $post->id ?>" data-url="<?php echo $configs['App_url'] . Route::route('create.like')->action ?>" data-type="dislike" data-auth="<?php echo $_SESSION['auth']->id?>" class="d-inline-block text-muted mx-3 text-decoration-none create-like" style="cursor: pointer;">
+                                <strong class="mx-1 countDislikes">(<?php echo $countPostDislikes ?>)</strong><i class="<? if($authDislikes == 1): ?>fas <? else: ?> far <? endif;?> fa-thumbs-down dislike-icon"></i> Dislike
                             </a>
-                            <a href="#" class="d-inline-block text-muted text-decoration-none">
-                                <strong>12</strong> Comments</small>
+                            <a class="d-inline-block text-muted mx-3 text-decoration-none" data-toggle="collapse" href="#comments-<?php echo $post->id ?>" role="button" aria-expanded="false" aria-controls="comment-<?php echo $post->id ?>">
+                                <i class="far fa-comments mr-1"></i> Comments (0)
                             </a>
                         </div>
+                        </div>
+                        <div class="collapse" id="comments-<?php echo $post->id ?>">
+                            <div class="card card-body">
+                                comments
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -113,6 +124,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/16bfaec043.js" crossorigin="anonymous"></script>
     <script src="../js/sidebar.js"></script>
+    <script src="../js/like.js"></script>
     <script>
         $('.post-categories').each((i, obj) => {
             let arr = $(obj).data('categories').split(' ')

@@ -6,6 +6,7 @@ require_once './Controllers/PostController.php';
 require_once './Controllers/AuthController.php';
 require_once './Controllers/UserController.php';
 require_once './Controllers/CategoryController.php';
+require_once './Controllers/LikeController.php';
 require_once './Models/Model.php';
 require_once './Models/Post.php';
 $configs = include "./config.php";
@@ -40,6 +41,9 @@ try {
     Route::get('/categories', [CategoryController::class, 'index'])->name('categories');
     Route::get('/categories/posts', [CategoryController::class, 'showPosts'])->name('categories.posts');
 
+    #likes
+    Route::get('/like', [LikeController::class, 'store'])->name('create.like');
+    Route::get('/like/list', [LikeController::class, 'getPostLikes'])->name('post.likes');
     
     // ---- execute route callback ----
     $b = false;

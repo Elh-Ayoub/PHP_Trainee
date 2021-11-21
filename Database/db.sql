@@ -42,5 +42,19 @@ CREATE TABLE `sociopedia`.`categories` (
   `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`));
 
-
-
+-- Likes table
+CREATE TABLE `sociopedia`.`likes` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `author` INT NOT NULL,
+  `type` ENUM('like', 'dislike') NOT NULL,
+  `post_id` INT NULL,
+  `comment_id` INT NULL,
+  `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  INDEX `post_id_idx` (`post_id` ASC) VISIBLE,
+  CONSTRAINT `post_id`
+    FOREIGN KEY (`post_id`)
+    REFERENCES `sociopedia`.`posts` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
