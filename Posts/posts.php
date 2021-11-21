@@ -1,5 +1,6 @@
 <?php 
     session_start();
+    $configs = include './config.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -18,7 +19,7 @@
     <div class="wrapper">
         <!-- Preloader -->
         <div class="preloader">
-            <img class="loader" src="../img/logo.png" alt="preloader">
+            <img class="loader" src="<?php echo $configs['App_url'] ?>img/logo.png" alt="preloader">
         </div>
         <!-- Sidebar -->
         <?php include './layouts/sidebar.php';?>
@@ -28,7 +29,7 @@
         <div class="container posts-content">
             <h2 class="page-title">Home</h2>
             <a class="d-flex justify-content-center create-post align-items-center px-2 py-1" style="text-decoration : none" href="<? if(isset($_SESSION['auth'])): ?> /posts/create <? else: ?> /auth/login <?endif; ?>">
-                <img src="<? if(isset($_SESSION['auth'])):?>  <?php echo $configs['App_url'] . $_SESSION['auth']->profile_picture ?> <? else: ?> ../img/default.png<?endif; ?>" class="img-fluid img-circle" alt="User" width="30" height="30" style="border-radius: 50%;">
+                <img src="<? if(isset($_SESSION['auth'])):?>  <?php echo $_SESSION['auth']->profile_picture ?> <? else: ?> ../img/default.png<?endif; ?>" class="img-fluid img-circle" alt="User" width="30" height="30" style="border-radius: 50%;">
                 <span class="mx-1">What's in your mind? Create a post?</span>
             </a>
             <?php if ($posts && $posts != []): ?>
