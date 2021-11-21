@@ -7,6 +7,7 @@ require_once './Controllers/AuthController.php';
 require_once './Controllers/UserController.php';
 require_once './Controllers/CategoryController.php';
 require_once './Controllers/LikeController.php';
+require_once './Controllers/CommentController.php';
 require_once './Models/Model.php';
 require_once './Models/Post.php';
 $configs = include "./config.php";
@@ -45,6 +46,10 @@ try {
     Route::get('/like', [LikeController::class, 'store'])->name('create.like');
     Route::get('/like/list', [LikeController::class, 'getPostLikes'])->name('post.likes');
     
+    #comments
+    Route::get('/comment', [CommentController::class, 'store'])->name('create.comment');
+    Route::get('/comment/delete', [CommentController::class, 'destroy'])->name('delete.comment');
+
     // ---- execute route callback ----
     $b = false;
     array_filter(Route::$routes, function($route) {

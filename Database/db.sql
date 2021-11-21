@@ -58,3 +58,13 @@ CREATE TABLE `sociopedia`.`likes` (
     REFERENCES `sociopedia`.`posts` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
+
+  -- Comments table
+CREATE TABLE `sociopedia`.`comments` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `author` INT NOT NULL,
+  `content` TEXT NOT NULL,
+  `post_id` INT NOT NULL,
+  `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`));
