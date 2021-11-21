@@ -70,7 +70,7 @@
                                         <div class="offset-sm-2">
                                             <button id="SubmitInfoForm" type="submit" class="btn btn-success">Create</button>
                                         </div>
-                                        <a type="button" href="/" class="btn btn-secondary" data-toggle="modal" data-target="#modal-delete-user">Cancel</a>
+                                        <a type="button" href="/" class="btn btn-secondary">Cancel</a>
                                     </div>
                                 </div>
                             </div>

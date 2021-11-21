@@ -22,9 +22,9 @@ return array(
 
     'DB_CONNECTION'=> 'mysql',
     
-    'DB_USER' => 'root',
+    'DB_USER' => 'aelhaddadi',
 
-    'DB_PASSWORD' => '',
+    'DB_PASSWORD' => 'securepass',
 
     'DB_NAME' => 'sociopedia',
 
